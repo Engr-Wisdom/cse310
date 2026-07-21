@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ScrollView,
   View,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { router } from "expo-router";
+import { Menu, Divider } from "react-native-paper";
 
 import Header from "@/components/Header";
 import StatsCard from "@/components/StatsCard";
@@ -15,7 +16,7 @@ import Colors from "@/constants/Colors";
 import { useCourse } from "@/context/CourseContext";
 
 export default function HomeScreen() {
-  const { courses } = useCourse();
+  const { courses, deleteCourse } = useCourse();
 
   const assignments = courses.flatMap((course) =>
     course.weeks.flatMap((week) => week.assignments)
@@ -30,14 +31,16 @@ export default function HomeScreen() {
   const pendingAssignments =
     totalAssignments - completedAssignments;
 
+  const [menuVisible, setMenuVisible] = useState<string | null>(
+    null
+  );
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header />
 
-        <Text style={styles.sectionTitle}>
-          Overview
-        </Text>
+        <Text style={styles.sectionTitle}>Overview</Text>
 
         <View style={styles.statsRow}>
           <StatsCard
@@ -67,9 +70,7 @@ export default function HomeScreen() {
           />
         </View>
 
-        <Text style={styles.sectionTitle}>
-          My Courses
-        </Text>
+        <Text style={styles.sectionTitle}>My Courses</Text>
 
         {courses.length === 0 ? (
           <View style={styles.emptyCard}>
@@ -78,7 +79,8 @@ export default function HomeScreen() {
             </Text>
 
             <Text style={styles.emptyText}>
-              Tap the + button below to create your first course.
+              Tap the + button below to create your first
+              course.
             </Text>
           </View>
         ) : (
@@ -117,6 +119,7 @@ export default function HomeScreen() {
               <TouchableOpacity
                 key={course.id}
                 style={styles.courseCard}
+                activeOpacity={0.9}
                 onPress={() =>
                   router.push({
                     pathname: "/week",
@@ -126,12 +129,52 @@ export default function HomeScreen() {
                   })
                 }
               >
-                <Text style={styles.courseTitle}>
-                  {course.name}
-                </Text>
+                <View style={styles.cardHeader}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.courseTitle}>
+                      {course.name}
+                    </Text>
+
+                    <Text style={styles.courseCode}>
+                      {course.code}
+                    </Text>
+
+                    <Text style={styles.credit}>
+                      {course.credit} Credit Hour(s)
+                    </Text>
+                  </View>
+
+                  <Menu
+                    visible={menuVisible === course.id}
+                    onDismiss={() =>
+                      setMenuVisible(null)
+                    }
+                    anchor={
+                      <Text
+                        style={styles.menu}
+                        onPress={() =>
+                          setMenuVisible(course.id)
+                        }
+                      >
+                        ⋮
+                      </Text>
+                    }
+                  >
+                    <Menu.Item
+                      leadingIcon="delete"
+                      title="Delete Course"
+                      onPress={() => {
+                        setMenuVisible(null);
+                        deleteCourse(course.id);
+                      }}
+                    />
+                    <Divider />
+                  </Menu>
+                </View>
 
                 <Text style={styles.courseInfo}>
-                  {completed}/{total} Assignments Completed
+                  {completed}/{total} Assignments
+                  Completed
                 </Text>
 
                 <View style={styles.progressBackground}>
@@ -216,14 +259,39 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
 
+  cardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+
   courseTitle: {
     fontSize: 22,
     fontWeight: "bold",
     color: Colors.text,
   },
 
+  courseCode: {
+    marginTop: 5,
+    fontSize: 16,
+    fontWeight: "600",
+    color: Colors.primary,
+  },
+
+  credit: {
+    marginTop: 5,
+    fontSize: 15,
+    color: Colors.subText,
+  },
+
+  menu: {
+    fontSize: 28,
+    color: Colors.text,
+    paddingHorizontal: 8,
+  },
+
   courseInfo: {
-    marginTop: 10,
+    marginTop: 15,
     color: Colors.subText,
   },
 
@@ -245,4 +313,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: Colors.text,
   },
-}); 
+});
