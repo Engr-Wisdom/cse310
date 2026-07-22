@@ -19,6 +19,11 @@ interface Props {
   onAdd: (assignment: Assignment) => void;
 }
 
+/**
+ * Displays a modal form that allows the user to create
+ * a new assignment and add it to the selected course week.
+ */
+
 export default function AddAssignmentModal({
   visible,
   onClose,
@@ -31,12 +36,23 @@ export default function AddAssignmentModal({
   >("Medium");
   const [dueDate, setDueDate] = useState("");
 
+/**
+ * Clears all input fields and resets the form
+ * to its default values.
+ */
+
   function clearForm() {
     setTitle("");
     setDescription("");
     setPriority("Medium");
     setDueDate("");
   }
+
+  /**
+ * Validates the assignment information, creates a new
+ * assignment object, adds it to the selected week,
+ * clears the form, and closes the modal.
+ */
 
   function saveAssignment() {
     if (!title.trim()) {

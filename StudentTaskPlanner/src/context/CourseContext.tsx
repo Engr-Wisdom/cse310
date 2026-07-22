@@ -64,6 +64,11 @@ interface CourseContextType {
 const CourseContext =
   createContext<CourseContextType | undefined>(undefined);
 
+/**
+ * CourseProvider manages all course and assignment data.
+ * It provides functions for creating, updating, deleting,
+ * and storing courses and assignments throughout the app.
+ */
 export function CourseProvider({
   children,
 }: {
@@ -71,6 +76,10 @@ export function CourseProvider({
 }) {
   const [courses, setCourses] = useState<Course[]>([]);
 
+  /**
+   * Loads previously saved courses from AsyncStorage
+   * when the application starts.
+   */
   useEffect(() => {
     async function getCourses() {
       const saved = await loadCourses();
@@ -83,10 +92,18 @@ export function CourseProvider({
     getCourses();
   }, []);
 
+  /**
+   * Automatically saves all course data whenever
+   * the courses state changes.
+   */
   useEffect(() => {
     saveCourses(courses);
   }, [courses]);
 
+  /**
+   * Creates a new course with seven empty weeks
+   * and adds it to the application.
+   */
   const addCourse = (
     name: string,
     code: string,
@@ -106,6 +123,10 @@ export function CourseProvider({
     setCourses((prev) => [...prev, newCourse]);
   };
 
+  /**
+   * Updates the information of an existing course,
+   * including its name, code, and credit hours.
+   */
   const updateCourse = (
     courseId: string,
     name: string,
@@ -126,12 +147,20 @@ export function CourseProvider({
     );
   };
 
+  /**
+   * Removes a course and all of its assignments
+   * from the application.
+   */
   const deleteCourse = (courseId: string) => {
     setCourses((prev) =>
       prev.filter((course) => course.id !== courseId)
     );
   };
 
+  /**
+   * Adds a new assignment to the selected course
+   * and week.
+   */
   const addAssignment = (
     courseId: string,
     weekId: number,
@@ -159,6 +188,10 @@ export function CourseProvider({
     );
   };
 
+  /**
+   * Deletes an assignment from the selected
+   * course and week.
+   */
   const deleteAssignment = (
     courseId: string,
     weekId: number,
@@ -186,6 +219,11 @@ export function CourseProvider({
     );
   };
 
+  /**
+   * Changes the completion status of an assignment.
+   * Completed assignments become incomplete and
+   * incomplete assignments become completed.
+   */
   const toggleAssignment = (
     courseId: string,
     weekId: number,
@@ -236,6 +274,10 @@ export function CourseProvider({
   );
 }
 
+/**
+ * Custom hook that provides access to the
+ * CourseContext throughout the application.
+ */
 export function useCourse() {
   const context = useContext(CourseContext);
 

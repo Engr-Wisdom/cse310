@@ -20,6 +20,12 @@ interface Props {
   onDelete: () => void;
 }
 
+/**
+ * Displays an individual assignment card with its title,
+ * description, priority, due date, completion status,
+ * and menu options for deleting the assignment.
+ */
+
 export default function AssignmentCard({
   assignment,
   onToggle,

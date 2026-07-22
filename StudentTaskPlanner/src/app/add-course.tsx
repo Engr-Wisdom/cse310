@@ -15,12 +15,24 @@ import { router } from "expo-router";
 import Colors from "@/constants/Colors";
 import { useCourse } from "@/context/CourseContext";
 
+/**
+ * Displays the screen used to create a new course.
+ * Allows the user to enter the course name, code,
+ * and credit hours before saving the course.
+ */
+
 export default function AddCourseScreen() {
   const { addCourse } = useCourse();
 
   const [courseName, setCourseName] = useState("");
   const [courseCode, setCourseCode] = useState("");
   const [courseCredit, setCourseCredit] = useState("");
+
+  /**
+   * Validates the user's input and creates a new course.
+   * If any required field is missing or the credit hours
+   * are invalid, an alert is displayed instead of saving.
+  */
 
   function createCourse() {
     if (

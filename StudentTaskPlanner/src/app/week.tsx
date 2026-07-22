@@ -16,6 +16,13 @@ import AssignmentCard from "@/components/AssignmentCard";
 import AddAssignmentModal from "@/components/AddAssignmentModal";
 import { Assignment } from "@/types/Assignment";
 
+/**
+ * Displays the selected course, allows users to switch
+ * between weeks, view assignment progress, add new
+ * assignments, delete assignments, and mark assignments
+ * as completed.
+ */
+
 export default function WeekScreen() {
   const params = useLocalSearchParams();
 
@@ -57,6 +64,11 @@ export default function WeekScreen() {
   const assignments =
     selectedWeekData?.assignments ?? [];
 
+    /**
+     * Calculates the completion percentage for all
+     * assignments in the currently selected week.
+    */
+
   const progress = useMemo(() => {
     if (assignments.length === 0) return 0;
 
@@ -85,6 +97,12 @@ export default function WeekScreen() {
       progressStatus = "Completed";
     }
   }
+
+  /**
+   * Adds a new assignment to the currently selected
+   * week of the active course.
+  */
+
 
   const handleAddAssignment = (
     assignment: Assignment

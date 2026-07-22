@@ -15,6 +15,13 @@ import FloatingButton from "@/components/FloatingButton";
 import Colors from "@/constants/Colors";
 import { useCourse } from "@/context/CourseContext";
 
+/**
+ * Displays the application's home screen with an overview
+ * of assignment statistics, a list of all courses, course
+ * progress, and navigation to course details or the add
+ * course screen.
+ */ 
+
 export default function HomeScreen() {
   const { courses, deleteCourse } = useCourse();
 
