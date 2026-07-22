@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   Switch,
-  Alert,
 } from "react-native";
 
 import {
@@ -35,31 +34,12 @@ export default function AssignmentCard({
       ? "#F59E0B"
       : "#22C55E";
 
-  const confirmDelete = () => {
-    setMenuVisible(false);
-
-    Alert.alert(
-      "Delete Assignment",
-      "Are you sure you want to delete this assignment?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: onDelete,
-        },
-      ]
-    );
-  };
-
   return (
     <View
       style={[
         styles.card,
-        assignment.completed && styles.completedCard,
+        assignment.completed &&
+          styles.completedCard,
       ]}
     >
       {/* Header */}
@@ -78,11 +58,15 @@ export default function AssignmentCard({
 
         <Menu
           visible={menuVisible}
-          onDismiss={() => setMenuVisible(false)}
+          onDismiss={() =>
+            setMenuVisible(false)
+          }
           anchor={
             <Text
               style={styles.menu}
-              onPress={() => setMenuVisible(true)}
+              onPress={() =>
+                setMenuVisible(true)
+              }
             >
               ⋮
             </Text>
@@ -91,7 +75,10 @@ export default function AssignmentCard({
           <Menu.Item
             leadingIcon="delete"
             title="Delete Assignment"
-            onPress={confirmDelete}
+            onPress={() => {
+              setMenuVisible(false);
+              onDelete();
+            }}
           />
 
           <Divider />
@@ -100,7 +87,8 @@ export default function AssignmentCard({
 
       {/* Description */}
       <Text style={styles.description}>
-        {assignment.description || "No description"}
+        {assignment.description ||
+          "No description"}
       </Text>
 
       {/* Footer */}
@@ -108,20 +96,28 @@ export default function AssignmentCard({
         <Text
           style={[
             styles.priority,
-            { color: priorityColor },
+            {
+              color: priorityColor,
+            },
           ]}
         >
           {assignment.priority}
         </Text>
 
         <Text style={styles.date}>
-          📅 {assignment.dueDate || "No due date"}
+          📅{" "}
+          {assignment.dueDate ||
+            "No due date"}
         </Text>
       </View>
 
       {/* Completed Switch */}
-      <View style={styles.switchContainer}>
-        <Text style={styles.completedLabel}>
+      <View
+        style={styles.switchContainer}
+      >
+        <Text
+          style={styles.completedLabel}
+        >
           Completed
         </Text>
 
@@ -137,9 +133,7 @@ export default function AssignmentCard({
       </View>
     </View>
   );
-}
-
-const styles = StyleSheet.create({
+}const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.card,
     borderRadius: 18,
@@ -174,10 +168,10 @@ const styles = StyleSheet.create({
 
   menu: {
     fontSize: 28,
+    fontWeight: "bold",
     color: Colors.text,
     paddingHorizontal: 8,
     paddingVertical: 2,
-    fontWeight: "bold",
   },
 
   description: {

@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 import {
   View,
-  Text,
+ Text,
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
+
 import { useLocalSearchParams } from "expo-router";
 
 import Colors from "@/constants/Colors";
@@ -15,9 +17,11 @@ import AddAssignmentModal from "@/components/AddAssignmentModal";
 import { Assignment } from "@/types/Assignment";
 
 export default function WeekScreen() {
-  const { courseId } = useLocalSearchParams<{
-    courseId: string;
-  }>();
+  const params = useLocalSearchParams();
+
+  const courseId = Array.isArray(params.courseId)
+    ? params.courseId[0]
+    : params.courseId;
 
   const {
     courses,
@@ -27,10 +31,12 @@ export default function WeekScreen() {
   } = useCourse();
 
   const [selectedWeek, setSelectedWeek] = useState(1);
-  const [modalVisible, setModalVisible] = useState(false);
+
+  const [modalVisible, setModalVisible] =
+    useState(false);
 
   const course = courses.find(
-    (item) => item.id === courseId
+    (course) => course.id === courseId
   );
 
   if (!course) {
@@ -43,18 +49,21 @@ export default function WeekScreen() {
     );
   }
 
-  const week = course.weeks.find(
-    (item) => item.id === selectedWeek
-  );
+  const selectedWeekData =
+    course.weeks.find(
+      (week) => week.id === selectedWeek
+    );
 
-  const assignments = week?.assignments ?? [];
+  const assignments =
+    selectedWeekData?.assignments ?? [];
 
   const progress = useMemo(() => {
     if (assignments.length === 0) return 0;
 
-    const completed = assignments.filter(
-      (item) => item.completed
-    ).length;
+    const completed =
+      assignments.filter(
+        (assignment) => assignment.completed
+      ).length;
 
     return Math.round(
       (completed / assignments.length) * 100
@@ -62,18 +71,18 @@ export default function WeekScreen() {
   }, [assignments]);
 
   let progressColor = "#9CA3AF";
-  let status = "Not Started";
+  let progressStatus = "Not Started";
 
   if (assignments.length > 0) {
     if (progress < 70) {
       progressColor = "#EF4444";
-      status = "In Progress";
+      progressStatus = "In Progress";
     } else if (progress < 90) {
       progressColor = "#F59E0B";
-      status = "Almost Finished";
+      progressStatus = "Almost Finished";
     } else {
       progressColor = "#22C55E";
-      status = "Completed";
+      progressStatus = "Completed";
     }
   }
 
@@ -89,46 +98,54 @@ export default function WeekScreen() {
 
   return (
     <View style={styles.container}>
+
       <Text style={styles.title}>
         {course.name}
       </Text>
 
       <Text style={styles.subtitle}>
-        Select a Week
+        Select Week
       </Text>
 
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={course.weeks}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={[
-              styles.weekButton,
-              selectedWeek === item.id &&
-                styles.selectedWeek,
-            ]}
-            onPress={() =>
-              setSelectedWeek(item.id)
-            }
-          >
-            <Text
+      <View style={styles.weekSection}>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={
+            styles.weekContainer
+          }
+        >
+          {course.weeks.map((week) => (
+            <TouchableOpacity
+              key={week.id}
               style={[
-                styles.weekText,
-                selectedWeek === item.id && {
-                  color: "white",
-                },
+                styles.weekButton,
+                selectedWeek === week.id &&
+                  styles.selectedWeek,
               ]}
+              onPress={() =>
+                setSelectedWeek(week.id)
+              }
             >
-              Week {item.id}
-            </Text>
-          </TouchableOpacity>
-        )}
-      />
+              <Text
+                style={[
+                  styles.weekText,
+                  selectedWeek === week.id && {
+                    color: "#FFFFFF",
+                  },
+                ]}
+              >
+                Week {week.id}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
+      </View>
 
       <Text style={styles.progressText}>
-        {status} ({progress}%)
+        {progressStatus} ({progress}%)
       </Text>
 
       <View style={styles.progressBackground}>
@@ -154,34 +171,43 @@ export default function WeekScreen() {
         </Text>
       </TouchableOpacity>
 
-      <FlatList
-        data={assignments}
-        keyExtractor={(item) => item.id}
-        ListEmptyComponent={
-          <Text style={styles.empty}>
-            No assignments added for this week.
-          </Text>
-        }
-        renderItem={({ item }) => (
-          <AssignmentCard
-            assignment={item}
-            onToggle={() =>
-              toggleAssignment(
-                course.id,
-                selectedWeek,
-                item.id
-              )
-            }
-            onDelete={() =>
-              deleteAssignment(
-                course.id,
-                selectedWeek,
-                item.id
-              )
-            }
-          />
-        )}
-      />
+      <View style={styles.assignmentContainer}>
+
+        <FlatList
+          data={assignments}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingBottom: 40,
+            flexGrow: 1,
+          }}
+          ListEmptyComponent={
+            <Text style={styles.empty}>
+              No assignments added for this week.
+            </Text>
+          }
+          renderItem={({ item }) => (
+            <AssignmentCard
+              assignment={item}
+              onToggle={() =>
+                toggleAssignment(
+                  course.id,
+                  selectedWeek,
+                  item.id
+                )
+              }
+              onDelete={() =>
+                deleteAssignment(
+                  course.id,
+                  selectedWeek,
+                  item.id
+                )
+              }
+            />
+          )}
+        />
+
+      </View>
 
       <AddAssignmentModal
         visible={modalVisible}
@@ -189,12 +215,13 @@ export default function WeekScreen() {
           setModalVisible(false)
         }
         onAdd={handleAddAssignment}
-      />    </View>
+      />
+
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
+const styles = StyleSheet.create({  container: {
     flex: 1,
     backgroundColor: Colors.background,
     paddingTop: 60,
@@ -205,23 +232,37 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     color: Colors.text,
-    marginBottom: 10,
+    marginBottom: 8,
   },
 
   subtitle: {
     fontSize: 18,
     color: Colors.subText,
-    marginBottom: 15,
+    marginBottom: 12,
+  },
+
+  weekSection: {
+    height: 150,
+    justifyContent: "center",
+    marginBottom: 18,
+  },
+
+  weekContainer: {
+    alignItems: "center",
+    paddingRight: 12,
   },
 
   weekButton: {
+    width: 95,
+    height: 130,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    borderRadius: 14,
     backgroundColor: Colors.card,
-    paddingHorizontal: 18,
-    paddingVertical: 12,
-    borderRadius: 12,
-    marginRight: 10,
-    marginBottom: 20,
-    elevation: 2,
+    marginRight: 12,
+    flexShrink: 0,
+    elevation: 3,
+    paddingTop: 12,
   },
 
   selectedWeek: {
@@ -229,13 +270,13 @@ const styles = StyleSheet.create({
   },
 
   weekText: {
-    color: Colors.text,
-    fontWeight: "bold",
     fontSize: 16,
+    fontWeight: "bold",
+    color: Colors.text,
   },
 
   progressText: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: "600",
     color: Colors.text,
     marginBottom: 10,
@@ -246,7 +287,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E5E7EB",
     borderRadius: 20,
     overflow: "hidden",
-    marginBottom: 25,
+    marginBottom: 22,
   },
 
   progressFill: {
@@ -256,22 +297,27 @@ const styles = StyleSheet.create({
 
   addButton: {
     backgroundColor: Colors.primary,
-    padding: 16,
-    borderRadius: 15,
-    marginBottom: 20,
+    borderRadius: 16,
+    paddingVertical: 16,
     alignItems: "center",
+    marginBottom: 16,
+    elevation: 4,
   },
 
   addButtonText: {
-    color: "white",
+    color: "#FFFFFF",
     fontSize: 17,
     fontWeight: "bold",
   },
 
+  assignmentContainer: {
+    flex: 1,
+  },
+
   empty: {
+    marginTop: 50,
     textAlign: "center",
-    color: Colors.subText,
-    marginTop: 40,
     fontSize: 16,
+    color: Colors.subText,
   },
 });
