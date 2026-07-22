@@ -1,56 +1,103 @@
-# Welcome to your Expo app 👋
+````markdown
+# StudentTaskPlanner
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Overview
 
-## Get started
+As a software engineer, I am continually improving my software development skills by learning modern mobile application development using React Native and Expo.
 
-1. Install dependencies
+StudentTaskPlanner is a mobile application that helps students organize their academic work. The application allows users to create courses, organize assignments by week, track assignment progress, and store data locally so that it remains available even after the application is closed.
 
-   ```bash
-   npm install
-   ```
+The purpose of creating this software was to learn how to build a mobile application using React Native, implement navigation between multiple screens, manage application state using React Context, and persist data using AsyncStorage.
 
-2. Start the app
+**Software Demo Video**
 
-   ```bash
-   npx expo start
-   ```
+[Software Demo Video](https://www.loom.com/share/9d2803a79a704d89ab3975c80e710801)
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Development Environment
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Tools Used
 
-## Get a fresh project
+- Visual Studio Code
+- Node.js
+- npm (Node Package Manager)
+- Expo CLI
+- React Native
+- Expo Router
+- React Native Paper
+- AsyncStorage
+- Git
+- GitHub
 
-When you're ready, run:
+### Programming Language
 
-```bash
-npm run reset-project
-```
+- TypeScript
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-### Other setup steps
+## Features
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+- Create and manage multiple courses.
+- Organize assignments into seven weekly sections.
+- Add assignment titles, descriptions, priorities, and due dates.
+- Mark assignments as completed.
+- Track assignment completion with a progress bar.
+- Delete courses.
+- Delete assignments.
+- Store application data locally using AsyncStorage.
+- Responsive mobile user interface.
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## Running the Project
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Clone the repository.
 
-## Join the community
+---bash
+git clone https://github.com/Engr-Wisdom/cse310/tree/main/StudentTaskPlanner
 
-Join our community of developers creating universal apps.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Navigate into the project folder.
+
+---bash
+cd StudentTaskPlanner
+---
+
+Install project dependencies.
+
+---bash
+npm install
+---
+
+Start the Expo development server.
+---bash
+npx expo start
+---
+
+---
+
+## Useful Websites
+
+- [React Native Documentation](https://reactnative.dev/docs/getting-started)
+- [Expo Documentation](https://docs.expo.dev/)
+- [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
+- [React Native Paper Documentation](https://callstack.github.io/react-native-paper/)
+- [AsyncStorage Documentation](https://react-native-async-storage.github.io/async-storage/)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [Git Documentation](https://git-scm.com/doc)
+- [GitHub Documentation](https://docs.github.com/)
+
+## Future Work
+
+In the future, I would like to improve StudentTaskPlanner by adding:
+
+* Notifications and assignment reminders.
+* Calendar integration.
+* Cloud synchronization using Firebase.
+* User authentication.
+* Assignment editing.
+* Course editing.
+* Dark mode.
+* Search and filtering of assignments.
+* Course statistics and analytics.
