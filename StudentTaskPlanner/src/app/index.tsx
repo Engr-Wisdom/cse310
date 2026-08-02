@@ -20,27 +20,24 @@ import { useCourse } from "@/context/CourseContext";
  * of assignment statistics, a list of all courses, course
  * progress, and navigation to course details or the add
  * course screen.
- */ 
+ */
 
 export default function HomeScreen() {
   const { courses, deleteCourse } = useCourse();
 
   const assignments = courses.flatMap((course) =>
-    course.weeks.flatMap((week) => week.assignments)
+    course.weeks.flatMap((week) => week.assignments),
   );
 
   const totalAssignments = assignments.length;
 
   const completedAssignments = assignments.filter(
-    (assignment) => assignment.completed
+    (assignment) => assignment.completed,
   ).length;
 
-  const pendingAssignments =
-    totalAssignments - completedAssignments;
+  const pendingAssignments = totalAssignments - completedAssignments;
 
-  const [menuVisible, setMenuVisible] = useState<string | null>(
-    null
-  );
+  const [menuVisible, setMenuVisible] = useState<string | null>(null);
 
   return (
     <View style={styles.container}>
@@ -81,38 +78,29 @@ export default function HomeScreen() {
 
         {courses.length === 0 ? (
           <View style={styles.emptyCard}>
-            <Text style={styles.emptyTitle}>
-              No courses created
-            </Text>
+            <Text style={styles.emptyTitle}>No courses created</Text>
 
             <Text style={styles.emptyText}>
-              Tap the + button below to create your first
-              course.
+              Tap the + button below to create your first course.
             </Text>
           </View>
         ) : (
           courses.map((course) => {
             const total = course.weeks.reduce(
-              (sum, week) =>
-                sum + week.assignments.length,
-              0
+              (sum, week) => sum + week.assignments.length,
+              0,
             );
 
             const completed = course.weeks.reduce(
               (sum, week) =>
                 sum +
-                week.assignments.filter(
-                  (assignment) => assignment.completed
-                ).length,
-              0
+                week.assignments.filter((assignment) => assignment.completed)
+                  .length,
+              0,
             );
 
             const progress =
-              total === 0
-                ? 0
-                : Math.round(
-                    (completed / total) * 100
-                  );
+              total === 0 ? 0 : Math.round((completed / total) * 100);
 
             let progressColor = "#EF4444";
 
@@ -138,13 +126,9 @@ export default function HomeScreen() {
               >
                 <View style={styles.cardHeader}>
                   <View style={{ flex: 1 }}>
-                    <Text style={styles.courseTitle}>
-                      {course.name}
-                    </Text>
+                    <Text style={styles.courseTitle}>{course.name}</Text>
 
-                    <Text style={styles.courseCode}>
-                      {course.code}
-                    </Text>
+                    <Text style={styles.courseCode}>{course.code}</Text>
 
                     <Text style={styles.credit}>
                       {course.credit} Credit Hour(s)
@@ -153,15 +137,11 @@ export default function HomeScreen() {
 
                   <Menu
                     visible={menuVisible === course.id}
-                    onDismiss={() =>
-                      setMenuVisible(null)
-                    }
+                    onDismiss={() => setMenuVisible(null)}
                     anchor={
                       <Text
                         style={styles.menu}
-                        onPress={() =>
-                          setMenuVisible(course.id)
-                        }
+                        onPress={() => setMenuVisible(course.id)}
                       >
                         ⋮
                       </Text>
@@ -180,8 +160,7 @@ export default function HomeScreen() {
                 </View>
 
                 <Text style={styles.courseInfo}>
-                  {completed}/{total} Assignments
-                  Completed
+                  {completed}/{total} Assignments Completed
                 </Text>
 
                 <View style={styles.progressBackground}>
@@ -196,9 +175,7 @@ export default function HomeScreen() {
                   />
                 </View>
 
-                <Text style={styles.progressText}>
-                  {progress}% Complete
-                </Text>
+                <Text style={styles.progressText}>{progress}% Complete</Text>
               </TouchableOpacity>
             );
           })
@@ -207,11 +184,7 @@ export default function HomeScreen() {
         <View style={{ height: 120 }} />
       </ScrollView>
 
-      <FloatingButton
-        onPress={() =>
-          router.push("/add-course")
-        }
-      />
+      <FloatingButton onPress={() => router.push("/add-course")} />
     </View>
   );
 }
