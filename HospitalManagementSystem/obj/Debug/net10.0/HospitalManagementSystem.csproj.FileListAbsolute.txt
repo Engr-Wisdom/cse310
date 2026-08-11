@@ -1,0 +1,15 @@
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\bin\Debug\net10.0\HospitalManagementSystem.exe
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\bin\Debug\net10.0\HospitalManagementSystem.deps.json
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\bin\Debug\net10.0\HospitalManagementSystem.runtimeconfig.json
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\bin\Debug\net10.0\HospitalManagementSystem.dll
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\bin\Debug\net10.0\HospitalManagementSystem.pdb
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\obj\Debug\net10.0\HospitalManagementSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\obj\Debug\net10.0\HospitalManagementSystem.AssemblyInfoInputs.cache
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\obj\Debug\net10.0\HospitalManagementSystem.AssemblyInfo.cs
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\obj\Debug\net10.0\HospitalManagementSystem.csproj.CoreCompileInputs.cache
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\obj\Debug\net10.0\HospitalManagementSystem.sourcelink.json
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\obj\Debug\net10.0\HospitalManagementSystem.dll
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\obj\Debug\net10.0\refint\HospitalManagementSystem.dll
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\obj\Debug\net10.0\HospitalManagementSystem.pdb
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\obj\Debug\net10.0\HospitalManagementSystem.genruntimeconfig.cache
+C:\Users\WISDOM EFFIONG\OneDrive\Desktop\cse310\HospitalManagementSystem\obj\Debug\net10.0\ref\HospitalManagementSystem.dll
