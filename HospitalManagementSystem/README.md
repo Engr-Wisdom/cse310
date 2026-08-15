@@ -35,3 +35,7 @@ The purpose of creating this software is to practice C# programming concepts suc
 - [C# File I/O Documentation](https://learn.microsoft.com/dotnet/standard/io/)
 - [Git Documentation](https://git-scm.com/doc)
 - [GitHub Docs](https://docs.github.com/)
+
+# Future Work
+
+In the future, I would like to improve the Hospital Management System by adding user authentication, a graphical user interface, improved appointment management, search and filtering, and additional hospital management features.
