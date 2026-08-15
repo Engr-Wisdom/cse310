@@ -1,3 +1,5 @@
+# HospitalManagementSystem
+
 # Overview
 
 As a software engineer, I am continually building my programming skills by learning C# and improving my understanding of software development practices.
@@ -5,6 +7,8 @@ As a software engineer, I am continually building my programming skills by learn
 This software is a simple Hospital Management System written in C#. It is a console-based application that allows users to manage basic hospital records, including patients, doctors, and appointments. Users can add, view, and delete records, while the system automatically generates IDs for patients, doctors, and appointments.
 
 The purpose of creating this software is to practice C# programming concepts such as variables, expressions, conditionals, loops, functions, classes, collections, and file reading and writing. The application also uses text files to save patient, doctor, and appointment information so that the data can be loaded again when the program is restarted.
+
+**Software Demo Video**
 
 [Software Demo Video] https://www.loom.com/share/86f4bfd067b245fcbe8dc66ac919d7cf
 

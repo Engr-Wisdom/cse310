@@ -1,4 +1,4 @@
-# BokkingHotel
+# BookingHotel
 
 ## Overview
 
